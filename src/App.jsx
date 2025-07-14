@@ -8,6 +8,12 @@ import { Camera } from '@mediapipe/camera_utils';
 
 function App() {
   const [ title, setTitle ] = useState('Live Interaction (offline)');
+  const img = '/image.png';
+
+  const canstyle = useState({
+    display: "none"
+  });
+
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const cameraRef = useRef(null);
@@ -43,6 +49,7 @@ function App() {
     const videoElement = webcamRef.current;
     const canvasElement = canvasRef.current;
     const ctx = canvasElement.getContext('2d');
+    
 
     const hands = new Hands({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`,
@@ -164,10 +171,11 @@ function App() {
 
       {/* video is hidde for MediaPipe Camera */}
       <video ref={webcamRef} style={{ display: 'none' }} />
+      
+      <img src={img} width="640" height="480"/>
 
       {/* canvas used for drawing connector and prediction labels */}
       <canvas ref={canvasRef} width="640" height="480" />
-
       <p className="mt-4 text-xl">Prediction: <span className="font-bold text-green-600">{prediction}</span></p>
     </div>
   );
