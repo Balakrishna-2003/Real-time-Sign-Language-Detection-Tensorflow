@@ -8,6 +8,7 @@ import { Camera } from '@mediapipe/camera_utils';
 
 function App() {
   const [ title, setTitle ] = useState('Live Interaction (offline)');
+  const [ showImage, setShowImage ] = useState(false);
   const img = '/image.png';
 
   const canstyle = useState({
@@ -125,15 +126,15 @@ function App() {
                 
                   const canvas = canvasRef.current;
                   const ctx = canvas.getContext('2d');
+                  cameraRef.current.stop();
+                  setShowImage(true);
+                  setTitle("!");
+                  // const image = new Image();
+                  // image.src = '/image.png'; // funny image
 
-                  const image = new Image();
-                  image.src = '/image.png'; // funny image
-
-                  image.onload = () => {
-                    ctx.drawImage(image,  0, 0, canvas.width, canvas.height);
-                    cameraRef.current.stop();
-                    setTitle("!");
-                  };
+                  // image.onload = () => {
+                  //   ctx.drawImage(image,  0, 0, canvas.width, canvas.height);
+                  // };
               }
             };
           });
@@ -172,10 +173,20 @@ function App() {
       {/* video is hidde for MediaPipe Camera */}
       <video ref={webcamRef} style={{ display: 'none' }} />
       
-      <img src={img} width="640" height="480"/>
+      <img 
+        src={img} 
+        width="640" 
+        height="480" 
+        style={{ display: showImage ? 'block' : 'none'}}
+      />
 
       {/* canvas used for drawing connector and prediction labels */}
-      <canvas ref={canvasRef} width="640" height="480" />
+      <canvas 
+        ref={canvasRef} 
+        width="640" 
+        height="480" 
+        style={{ display: !showImage ? 'block' : 'none'}}
+        />
       <p className="mt-4 text-xl">Prediction: <span className="font-bold text-green-600">{prediction}</span></p>
     </div>
   );
