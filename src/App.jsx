@@ -113,13 +113,10 @@ function App() {
             
             const confidence = (probabilities[idx] * 100).toFixed(2);  // model accuracy
                       
-            // console.log(`Prediction: ${LABELS[idx]} (${confidence}%)`); 
+            console.log(`Prediction: ${LABELS[idx]} (${confidence}%)`); 
             if (isMounted){ 
-              setPrediction(LABELS[idx]);
-              ctx.font = '20px Arial';
-              ctx.fillStyle = 'red'; 
-              ctx.fillText(LABELS[idx], minX, minY - 10); // -10px above the box
-              if(idx == 5){
+              
+              if(idx == 5 && confidence > 99.99){
                 
                   const canvas = canvasRef.current;
                   const ctx = canvas.getContext('2d');
@@ -132,6 +129,13 @@ function App() {
                   // image.onload = () => {
                   //   ctx.drawImage(image,  0, 0, canvas.width, canvas.height);
                   // };
+              }else if(idx == 5 && confidence <= 99.99){
+                setPrediction('');
+              }else{
+                setPrediction(LABELS[idx]);
+                ctx.font = '20px Arial';
+                ctx.fillStyle = 'red'; 
+                ctx.fillText(LABELS[idx], minX, minY - 10); // -10px above the box
               }
             };
           });
