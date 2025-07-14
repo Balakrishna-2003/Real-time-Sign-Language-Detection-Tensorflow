@@ -11,9 +11,6 @@ function App() {
   const [ showImage, setShowImage ] = useState(false);
   const img = '/image.png';
 
-  const canstyle = useState({
-    display: "none"
-  });
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
