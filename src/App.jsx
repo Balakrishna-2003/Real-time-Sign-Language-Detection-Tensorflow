@@ -23,7 +23,7 @@ function App() {
   const [prediction, setPrediction] = useState('');
 
   // supervised labels for the model to predict
-  const LABELS = ['A', 'B', 'C', 'D', 'E', 'why are you like this?'];
+  const LABELS = ['A', 'B', 'C', 'D', 'E', '😁'];
 
   useEffect(() => {
     let isMounted = true;
