@@ -99,9 +99,17 @@ function App() {
           tf.tidy(() => {
             const input = tf.tensor(flat).reshape([1, 42]);
             const out = modelRef.current.predict(input);
+
+            const probabilities = out.dataSync(); 
+
+            // console.log(out);
             const idx = out.argMax(1).dataSync()[0];
+
+            
+            const confidence = (probabilities[idx] * 100).toFixed(2);  // model accuracy
+                      
+            // console.log(`Prediction: ${LABELS[idx]} (${confidence}%)`); 
             if (isMounted){ 
-              console.log(LABELS[idx]);
               setPrediction(LABELS[idx]);
               ctx.font = '20px Arial';
               ctx.fillStyle = 'red'; 
@@ -115,9 +123,9 @@ function App() {
                   image.src = '/image.png'; // funny image
 
                   image.onload = () => {
-                    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(image,  0, 0, canvas.width, canvas.height);
                     cameraRef.current.stop();
-                    setTitle("This model is not meant for this shit!");
+                    setTitle("!");
                   };
               }
             };
