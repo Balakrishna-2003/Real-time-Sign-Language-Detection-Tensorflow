@@ -14,11 +14,14 @@ import { Camera } from '@mediapipe/camera_utils';
 
 
 
+
 // import Page from './components/page';
 // import { translate, Translator, speak, singleTranslate, batchTranslate, languages, isSupported, getCode } from 'google-translate-api-x';
 
 // import { translate } from '@vitalets/google-translate-api';
 import axios from 'axios';
+
+
 
 
 export default function () {
@@ -51,7 +54,7 @@ export default function () {
 
   // supervised labels for the model to predict
   // const LABELS = ['A', 'B', 'C', 'D', 'E', '😁', 'F', ];
-  const LABELS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'SPACE', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z','DELETE']
+  const LABELS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'SPACE', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'DELETE']
 
   useEffect(() => {
     const loadModel = async () => {
@@ -96,6 +99,8 @@ export default function () {
     // console.log(res.data.hello);
 
   }
+
+
   async function suggestions(word) {
     // console.log(req.body);
 
@@ -107,14 +112,22 @@ export default function () {
   const handleWordSelect = (word) => {
     // setPredictedWord((prev) => word);
     setPredictedWord((prevSentence) => {
-    const words = prevSentence.trim().split(' ');
-    words[words.length - 1] = currWord; // replace last word
-    return words.join(' ');
-  });
+      const words = prevSentence.trim().split(' ');
+      words[words.length - 1] = currWord; // replace last word
+      return words.join(' ');
+    });
   }
 
 
-
+  const handleChange = (value) => {
+    const val = value;
+    setTimeout(() => {
+      if (val == prediction) {
+        setPredictedWord((prev) => { prev + ' ' + val + ' ' });
+        setCurrWord('');
+      }
+    }, 1000);
+  };
 
   const startCamera = () => {
     console.log("hello world");
@@ -139,15 +152,7 @@ export default function () {
       }
     };
 
-    const handleChange = (value) => {
-      const val = value;
-      setTimeout(() => {
-        if(val == prediction){
-          setPredictedWord((prev) => { prev + ' ' + val + ' ' });
-          setCurrWord('');
-        }
-      }, 1000);
-    };
+
 
 
     const videoElement = webcamRef.current;
@@ -252,7 +257,7 @@ export default function () {
                   lastTimestampRef.current = now;
 
                   // if (timerRef.current) {
-                    clearTimeout(timerRef.current);
+                  clearTimeout(timerRef.current);
                   // }
 
                   timerRef.current = setTimeout(() => {
@@ -308,8 +313,11 @@ export default function () {
             };
           });
         }
-      }else{
+      } else {
         setPrediction('');
+        clearTimeout(timerRef.current);
+        lastPredictionRef.current = '';
+        lastTimestampRef.current = Date.now();
       }
 
 
@@ -371,7 +379,7 @@ export default function () {
 
 
   return (
-   
+
     <div className='mainDiv'>
       <div className='videoFeedDiv'>
         <div className='videoInDiv'>
