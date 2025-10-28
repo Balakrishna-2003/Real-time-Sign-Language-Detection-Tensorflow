@@ -43,9 +43,9 @@ export default function () {
 
   const [currWord, setCurrWord] = useState('');
   const [prediction, setPrediction] = useState('');
-  const [predictedWord, setPredictedWord] = useState('');
+  const [predictedWord, setPredictedWord] = useState("");
 
-  const [translatedSen, setTranslatedSen] = useState('');
+  const [translatedSen, setTranslatedSen] = useState("");
   const [translationLang, setTranslationLang] = useState('en');
 
   const [words, setWords] = useState([]);
@@ -77,6 +77,15 @@ export default function () {
 
     loadModel(); //loading the tensorflow model
   }, []);
+
+
+  const handleSpeak = () => {
+    if (!translatedSen) return;
+
+    const utterance = new SpeechSynthesisUtterance(translatedSen);
+    utterance.lang = "hi-IN"; // You can change this
+    speechSynthesis.speak(utterance);
+  };
 
 
   async function handleTranslate(data) {
@@ -468,6 +477,9 @@ export default function () {
           <div className="predictedWord">
             {translatedSen}
           </div>
+          <button onClick={handleSpeak} style={{ marginTop: "10px" }}>
+        🔊 Speak
+      </button>
         </div>
       </div>
     </div>

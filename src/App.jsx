@@ -10,6 +10,7 @@ import { Camera } from '@mediapipe/camera_utils';
 import Page from './components/page';
 import Home from './Home';
 import Navbar from './components/Navbar';
+import Testing from './components/testing';
 
 function App() {
   
@@ -21,6 +22,7 @@ function App() {
           <Route path='/' element={<Navigate to='/Page'/>} />
           <Route path='/Page' element={<Page/>}/>
           <Route path='/Home' element={<Home/>}/>
+          <Route path='/testing' element={<Testing/>}/>
         </Routes>
       </BrowserRouter>
     </div>
