@@ -1,5 +1,5 @@
 
-import { IoVideocamOutline } from "react-icons/io5";
+import { IoVideocamOutline, IoVideocamOffOutline } from "react-icons/io5";
 import { GoDotFill } from "react-icons/go";
 import { FaRegFileLines } from "react-icons/fa6";
 import { MdGTranslate } from "react-icons/md";
@@ -25,6 +25,8 @@ import axios from 'axios';
 
 
 export default function () {
+
+  const [isCameraOn, setisCameraOn] = useState(false);
 
   const [title, setTitle] = useState('Live Interaction (offline)');
   const [showImage, setShowImage] = useState(false);
@@ -78,10 +80,24 @@ export default function () {
     loadModel(); //loading the tensorflow model
   }, []);
 
+  // add this near your other effects
+  useEffect(() => {
+    if (isCameraOn) {
+      startCamera();
+    }
+    // Cleanup when camera turns off
+    return () => {
+      if (!isCameraOn && cameraRef.current) {
+        cameraRef.current.stop();
+      }
+    };
+  }, [isCameraOn]);
+
+
 
   const handleSpeak = () => {
     if (!translatedSen) return;
-
+    // alert(translatedSen);
     const utterance = new SpeechSynthesisUtterance(translatedSen);
     utterance.lang = "hi-IN"; // You can change this
     speechSynthesis.speak(utterance);
@@ -141,7 +157,7 @@ export default function () {
   const startCamera = () => {
     console.log("hello world");
     let isMounted = true;
-
+    setisCameraOn(true);
 
 
     const resizeCanvas = () => {
@@ -360,6 +376,7 @@ export default function () {
 
   const stopCamera = () => {
     // setIO(false);
+    setisCameraOn(false);
 
 
     if (cameraRef.current) {
@@ -398,27 +415,40 @@ export default function () {
 
             <div className="btns">
               <div className="stopBtn" onClick={() => stopCamera()}>
-                <GoDotFill style={{ color: "red", marginLeft: "10px" }} /><button type="button" >stop</button>
+                <GoDotFill style={{ color: "red", marginLeft: "10px" }} /><button type="button" className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-slate-700 hover:bg-red-600/80 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!isCameraOn}>stop</button>
               </div>
-              <div className="startLiveBtn" onClick={() => { startCamera() }}>
-                <button type="button" >Start Live</button>
+              <div className="startLiveBtn" onClick={() => { setisCameraOn(true) }}>
+                <button type="button" disabled={isCameraOn} className="px-4 py-2 rounded-lg text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">Start Live</button>
               </div>
             </div>
           </div>
           <div className="camInput">
-            {/* video is hidde for MediaPipe Camera */}
-            <video ref={webcamRef} style={{ display: 'none' }} />
+            {
+              isCameraOn ? (
+                <>
+                  {/* video is hidden for MediaPipe Camera */}
+                  < video ref={webcamRef} style={{ display: 'none' }} />
 
-            <img
-              src={img}
-              style={{ display: showImage ? 'block' : 'none' }}
-            />
+                  <img
+                    src={img}
+                    style={{ display: showImage ? 'block' : 'none' }}
+                  />
 
-            {/* canvas used for drawing connector and prediction labels */}
-            <canvas
-              ref={canvasRef}
-              style={{ display: !showImage ? 'block' : 'none' }}
-            />
+                  {/* canvas used for drawing connector and prediction labels */}
+                  <canvas
+                    ref={canvasRef}
+                    style={{ display: !showImage ? 'block' : 'none' }}
+                  />
+                </>
+              ) : (
+                <div className='text-center text-slate-500 flex flex-col items-center gap-2'>
+                  <IoVideocamOffOutline className="w-24 h-24" />
+                  <p>Camera is off. Click "Start Live" to begin.</p>
+                </div>
+              )
+            }
+
+
           </div>
           <div className="suggestionsDiv">
             {words.map((word, index) => (
@@ -458,6 +488,7 @@ export default function () {
               <option value='ja'>Japanese</option>
             </select>
             <button className="translateBtn" onClick={() => { handleTranslate(predictedWord) }} >Translate</button>
+            <button className="translateBtn" onClick={() => { setPredictedWord('') }} >clear</button>
           </div>
           <div className="predictedWord">
             {predictedWord}|
@@ -477,9 +508,9 @@ export default function () {
           <div className="predictedWord">
             {translatedSen}
           </div>
-          <button onClick={handleSpeak} style={{ marginTop: "10px" }}>
-        🔊 Speak
-      </button>
+          <button onClick={()=>{handleSpeak()}} style={{ marginTop: "10px", border: "2px solid black" }}>
+            🔊 Speak
+          </button>
         </div>
       </div>
     </div>

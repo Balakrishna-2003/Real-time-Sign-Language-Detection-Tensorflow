@@ -1,3 +1,5 @@
+@import"tailwindcss";
+
 * {
   margin: 0px;
   padding: 0px;
@@ -90,7 +92,6 @@
 
 .titleBtns {
   width: 100%;
-  /* border: 2px solid black; */
   padding-top: 10px;
   padding-bottom: 10px;
   display: flex;
@@ -98,10 +99,7 @@
   align-items: center;
 }
 
-/* .titleBtns>h2{
-  margin-top: 3px;
-  margin-bottom: 3px;
-} */
+
 
 
 
@@ -154,7 +152,6 @@
 .camInput {
   height: 100%;
   width: 98%;
-  /* border: 2px solid black; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -172,7 +169,6 @@
 
 .LetterRecognitonDiv {
   width: 95vw;
-  /* border: 2px solid black; */
   display: flex;
   flex-direction: row;
 }
@@ -199,7 +195,6 @@
   box-shadow: 4px 10px 15px rgb(120, 111, 111);
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   padding: 5px;
 }
 
@@ -231,9 +226,6 @@
   width: 90%;
   border-radius: 14px;
   border: 2px solid black;
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
   padding: 10px;
   font-size: 20px;
   overflow: scroll;
@@ -252,7 +244,6 @@
   height: 30px;
   width: 30px;
   border: 2px solid black;
-  /* border: 2px solid white; */
   background-color: black;
   color: white;
   border-radius: 12px;
@@ -260,7 +251,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* padding: 15px; */
   margin-right: 12px;
 }
 
@@ -923,7 +913,6 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  /* z-index: 10; */
   font-family: 'Inter', sans-serif;
   padding: 18px 0;
   border-radius: 14px;

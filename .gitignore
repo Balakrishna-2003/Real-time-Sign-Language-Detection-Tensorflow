@@ -18,6 +18,7 @@ public/tfmodel_converter_code/data/*
 public/tfmodel_converter_code/temp/*
 public/tfmodel_converter_code/tfjs-env/*
 public/tfmodel_converter_code/venv/*
+public/tfmodel_converter_code/ne_venv/*
 
 venv/*
 
