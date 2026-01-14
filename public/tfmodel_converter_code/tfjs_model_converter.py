@@ -111,10 +111,10 @@ model.save(h5_path)
 
 # converting model to tensorflow model for offline use
 
-# import tensorflowjs as tfjs
-# from tensorflow import keras
+import tensorflowjs as tfjs
+from tensorflow import keras
 
-# model = keras.models.load_model('hand_model_fixed.h5')
-# tfjs.converters.save_keras_model(model, '../tfjs_model')
+model = keras.models.load_model('hand_model_fixed.h5')
+tfjs.converters.save_keras_model(model, '../tfjs_model')
 print(" Model converted successfully to 'tfjs_model/' folder.")
 

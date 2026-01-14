@@ -3,7 +3,7 @@ import os
 import cv2
 import mediapipe as mp
 
-DATA_DIR = './temp'
+DATA_DIR = './data'
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
