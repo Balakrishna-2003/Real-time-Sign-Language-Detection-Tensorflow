@@ -113,7 +113,7 @@ export default function () {
     // });
     // const data = await response.json();
 
-    const response = await axios.post('http://localhost:3000/translate', {
+    const response = await axios.post(import.meta.env.VITE_BACKEND_URL+'/translate', {
       text: data,
       to: translationLang
     });
@@ -129,7 +129,7 @@ export default function () {
   async function suggestions(word) {
     // console.log(req.body);
 
-    const res = await axios.post('http://localhost:3000/autocomplete', { req: word });
+    const res = await axios.post(import.meta.env.VITE_BACKEND_URL+'/autocomplete', { req: word });
     setWords(res.data.hello);
     console.log(res.data);
   }
